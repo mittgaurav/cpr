@@ -1,0 +1,33 @@
+% erl
+Erlang/OTP 29 [erts-17.0.5] [source] [64-bit] [smp:10:10] [ds:10:10:10] [async-threads:1] [jit] [dtrace]
+
+Eshell V17.0.5 (press Ctrl+G to abort, type help(). for help)
+1> c("src/waiting_room",              [{i, "include"}]).
+{ok,waiting_room}
+2> c("tests/waiting_room_tests",      [{i, "include"}]).
+{ok,waiting_room_tests}
+3> eunit:test(waiting_room_tests,     [verbose]).
+======================== EUnit ========================
+module 'waiting_room_tests'
+  waiting_room_tests: start_link_test...[0.002 s] ok
+  waiting_room_tests: start_link_invalid_test...ok
+  waiting_room_tests: join_test...ok
+  waiting_room_tests: position_test...ok
+  waiting_room_tests: leave_test...ok
+  waiting_room_tests: leave_unknown_test...ok
+  waiting_room_tests: admit_test...ok
+  waiting_room_tests: admit_order_test...ok
+  waiting_room_tests: admit_limit_test...ok
+  waiting_room_tests: admit_invalid_test...ok
+  waiting_room_tests: admit_empty_test...ok
+  waiting_room_tests: admit_same_user_test...ok
+  waiting_room_tests: validate_invalid_test...ok
+  waiting_room_tests: validate_valid_test...ok
+=WARNING REPORT==== 1-Sep-2026::01:04:22.520321 ===
+validate: Token #Ref<0.7475570.3228041226.44048> from user1 expired
+  waiting_room_tests: validate_expired_test...ok
+  [done in 0.047 s]
+=======================================================
+  All 15 tests passed.
+ok
+4> 

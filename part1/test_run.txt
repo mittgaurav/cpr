@@ -1,0 +1,44 @@
+% erl
+Erlang/OTP 29 [erts-17.0.5] [source] [64-bit] [smp:10:10] [ds:10:10:10] [async-threads:1] [jit] [dtrace]
+
+Eshell V17.0.5 (press Ctrl+G to abort, type help(). for help)
+1> c("src/ticket_inventory.erl", [{i, "include"}]).
+{ok,ticket_inventory}
+2> c("tests/ticket_inventory_tests.erl", [{i, "include"}]).
+{ok,ticket_inventory_tests}
+3> eunit:test(ticket_inventory_tests, [verbose]).
+======================== EUnit ========================
+module 'ticket_inventory_tests'
+  ticket_inventory_tests: start_link_test...[0.002 s] ok
+  ticket_inventory_tests: create_event_test...ok
+=WARNING REPORT==== 1-Sep-2026::01:02:09.551819 ===
+create_event: Empty name from {<0.128.0>,
+                               [alias|
+                                #Ref<0.0.16387.4230814847.810876929.143650>]}
+  =WARNING REPORT==== 1-Sep-2026::01:02:09.551978 ===
+create_event: Empty venue from {<0.128.0>,
+                                [alias|
+                                 #Ref<0.0.16387.4230814847.810876929.143655>]}
+ticket_inventory_tests: create_event_invalid_test...=WARNING REPORT==== 1-Sep-2026::01:02:09.552045 ===
+create_event: Invalid request from {<0.128.0>,
+                                    [alias|
+                                     #Ref<0.0.16387.4230814847.810876929.143662>]}
+=WARNING REPORT==== 1-Sep-2026::01:02:09.552128 ===
+create_event: Invalid request from {<0.128.0>,
+                                    [alias|
+                                     #Ref<0.0.16387.4230814847.810876929.143665>]}
+ok
+  ticket_inventory_tests: unknown_event_test...ok
+  ticket_inventory_tests: open_sale_test...ok
+  ticket_inventory_tests: reserve_errors_test...ok
+  ticket_inventory_tests: reserve_test...ok
+  ticket_inventory_tests: sold_out_test...ok
+  ticket_inventory_tests: release_test...ok
+  ticket_inventory_tests: release_unknown_test...ok
+  ticket_inventory_tests: release_sold_out_test...ok
+  [done in 0.035 s]
+=======================================================
+  All 11 tests passed.
+ok
+4> 
+

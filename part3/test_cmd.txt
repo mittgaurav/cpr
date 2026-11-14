@@ -1,0 +1,9 @@
+> erl
+
+c("src/ticket_inventory",          [{i, "include"}]).
+c("src/waiting_room",              [{i, "include"}]).
+c("src/reservation",               [{i, "include"}]).
+
+c("tests/reservation_tests",       [{i, "include"}]).
+
+eunit:test(reservation_tests,      [verbose]).

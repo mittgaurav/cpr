@@ -1,0 +1,8 @@
+> erl
+
+c("src/ticket_inventory",          [{i, "include"}]).
+
+c("tests/ticket_inventory_tests",  [{i, "include"}]).
+
+eunit:test(ticket_inventory_tests, [verbose]).
+

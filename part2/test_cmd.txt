@@ -1,0 +1,9 @@
+> erl
+
+c("src/waiting_room",              [{i, "include"}]).
+
+c("tests/waiting_room_tests",      [{i, "include"}]).
+
+eunit:test(waiting_room_tests,     [verbose]).
+
+

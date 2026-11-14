@@ -1,0 +1,13 @@
+ticket:
+
+> erl -name ticket@127.0.0.1 -setcookie gaga
+
+c("src/ticket_boot", [{i, "include"}]).
+ticket_boot:start().
+
+load:
+
+> erl -name load@127.0.0.1 -setcookie gaga
+
+c("src/ticket_boot", [{i, "include"}]).
+ticket_boot:demo('ticket@127.0.0.1').

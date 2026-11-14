@@ -1,0 +1,28 @@
+% erl
+Erlang/OTP 29 [erts-17.0.5] [source] [64-bit] [smp:10:10] [ds:10:10:10] [async-threads:1] [jit] [dtrace]
+
+Eshell V17.0.5 (press Ctrl+G to abort, type help(). for help)
+1> c("src/ticket_inventory",          [{i, "include"}]).
+{ok,ticket_inventory}
+2> c("src/waiting_room",              [{i, "include"}]).
+{ok,waiting_room}
+3> c("src/reservation",               [{i, "include"}]).
+{ok,reservation}
+4> c("tests/reservation_tests",       [{i, "include"}]).
+{ok,reservation_tests}
+5> eunit:test(reservation_tests,      [verbose]).
+======================== EUnit ========================
+module 'reservation_tests'
+  reservation_tests: status_test...[0.002 s] ok
+  reservation_tests: pay_test...ok
+  reservation_tests: complete_test...ok
+  reservation_tests: cancel_test...ok
+  reservation_tests: payment_failed_test...=WARNING REPORT==== 1-Sep-2026::01:05:23.390872 ===
+reservation: #Ref<0.872588016.1885601795.170858> payment failed from {<0.129.0>,
+                                                                      #Ref<0.872588016.1885601795.170883>}
+ok
+  [done in 0.017 s]
+=======================================================
+  All 5 tests passed.
+ok
+6> 

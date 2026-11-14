@@ -1,0 +1,136 @@
+ticket:
+% erl -name ticket@127.0.0.1 -setcookie gaga
+Erlang/OTP 29 [erts-17.0.5] [source] [64-bit] [smp:10:10] [ds:10:10:10] [async-threads:1] [jit] [dtrace]
+
+Eshell V17.0.5 (press Ctrl+G to abort, type help(). for help)
+(ticket@127.0.0.1)1> c("src/ticket_boot", [{i, "include"}]).
+{ok,ticket_boot}
+(ticket@127.0.0.1)2> ticket_boot:start().
+Compiling ticket_inventory
+Compiling waiting_room
+Compiling reservation
+Compiling reservation_sup
+Compiling event_sup
+Compiling event_sup_sup
+Compiling ticket_sup
+Compiling ticket_load
+Started event "Sonu Nigam" at "Wembley": #Ref<0.3836056421.544735233.236290>
+Started event "Disney" at "Royal Albert": #Ref<0.3836056421.544735233.236333>
+Started event "Arijit Singh" at "O2 Arena": #Ref<0.3836056421.544735233.236364>
+ok
+=CRASH REPORT==== 1-Sep-2026::01:13:38.059777 ===
+  crasher:
+    initial call: reservation:init/1
+    pid: <0.942.0>
+    registered_name: []
+    exception exit: {reservation_failed,insufficient_tickets}
+      in function  gen_statem:init_result/8 (gen_statem.erl:3360)
+    ancestors: [<0.150.0>,<0.148.0>,event_sup_sup,ticket_sup,<0.90.0>,
+                  <0.78.0>,<0.76.0>,user_drv,<0.75.0>,<0.71.0>,kernel_sup,
+                  <0.47.0>]
+    message_queue_len: 0
+    messages: []
+    links: [<0.150.0>]
+    dictionary: []
+    trap_exit: false
+    status: running
+    heap_size: 376
+    stack_size: 29
+    reductions: 148
+  neighbours:
+
+=CRASH REPORT==== 1-Sep-2026::01:13:38.064408 ===
+  crasher:
+    initial call: reservation:init/1
+    pid: <0.953.0>
+    registered_name: []
+    exception exit: {reservation_failed,insufficient_tickets}
+      in function  gen_statem:init_result/8 (gen_statem.erl:3360)
+    ancestors: [<0.150.0>,<0.148.0>,event_sup_sup,ticket_sup,<0.90.0>,
+                  <0.78.0>,<0.76.0>,user_drv,<0.75.0>,<0.71.0>,kernel_sup,
+                  <0.47.0>]
+    message_queue_len: 0
+    messages: []
+    links: [<0.150.0>]
+    dictionary: []
+    trap_exit: false
+    status: running
+    heap_size: 376
+    stack_size: 29
+    reductions: 146
+  neighbours:
+....
+....
+....
+
+
+load:
+% erl -name load@127.0.0.1 -setcookie gaga
+Erlang/OTP 29 [erts-17.0.5] [source] [64-bit] [smp:10:10] [ds:10:10:10] [async-threads:1] [jit] [dtrace]
+
+Eshell V17.0.5 (press Ctrl+G to abort, type help(). for help)
+(load@127.0.0.1)1> c("src/ticket_boot", [{i, "include"}]).
+{ok,ticket_boot}
+(load@127.0.0.1)2> ticket_boot:demo('ticket@127.0.0.1').
+Compiling ticket_inventory
+Compiling waiting_room
+Compiling reservation
+Compiling reservation_sup
+Compiling event_sup
+Compiling event_sup_sup
+Compiling ticket_sup
+Compiling ticket_load
+Command is taking a long time, type Ctrl+G, then enter 'i' to interrupt
+Event #Ref<16384.3836056421.544735233.236333> summary:
+  admitted:            100
+  completed:           13
+  cancelled:           8
+  expired:             7
+  queued:              0
+  insufficient:        72
+  failed:              0
+  tickets total:       50
+  tickets sold:        30
+  tickets reserved:    17
+  tickets remaining:   20
+Final ticket state #Ref<16384.3836056421.544735233.236333>: {event,
+                                                             #Ref<16384.3836056421.544735233.236333>,
+                                                             "Disney",
+                                                             "Royal Albert",
+                                                             50,30,20,on_sale}
+Event #Ref<16384.3836056421.544735233.236290> summary:
+  admitted:            200
+  completed:           24
+  cancelled:           9
+  expired:             7
+  queued:              0
+  insufficient:        160
+  failed:              0
+  tickets total:       100
+  tickets sold:        83
+  tickets reserved:    59
+  tickets remaining:   17
+Final ticket state #Ref<16384.3836056421.544735233.236290>: {event,
+                                                             #Ref<16384.3836056421.544735233.236290>,
+                                                             "Sonu Nigam",
+                                                             "Wembley",100,83,
+                                                             17,on_sale}
+Event #Ref<16384.3836056421.544735233.236364> summary:
+  admitted:            400
+  completed:           57
+  cancelled:           26
+  expired:             10
+  queued:              0
+  insufficient:        307
+  failed:              0
+  tickets total:       200
+  tickets sold:        165
+  tickets reserved:    108
+  tickets remaining:   35
+Final ticket state #Ref<16384.3836056421.544735233.236364>: {event,
+                                                             #Ref<16384.3836056421.544735233.236364>,
+                                                             "Arijit Singh",
+                                                             "O2 Arena",200,
+                                                             165,35,on_sale}
+ok
+

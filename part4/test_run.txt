@@ -1,0 +1,29 @@
+ % erl
+Erlang/OTP 29 [erts-17.0.5] [source] [64-bit] [smp:10:10] [ds:10:10:10] [async-threads:1] [jit] [dtrace]
+
+Eshell V17.0.5 (press Ctrl+G to abort, type help(). for help)
+1> c("src/ticket_inventory",          [{i, "include"}]).
+{ok,ticket_inventory}
+2> c("src/waiting_room",              [{i, "include"}]).
+{ok,waiting_room}
+3> c("src/reservation",               [{i, "include"}]).
+{ok,reservation}
+4> c("src/ticket_sup",                [{i, "include"}]).
+{ok,ticket_sup}
+5> c("src/event_sup_sup",             [{i, "include"}]).
+{ok,event_sup_sup}
+6> c("src/event_sup",                 [{i, "include"}]).
+{ok,event_sup}
+7> c("src/reservation_sup",           [{i, "include"}]).
+{ok,reservation_sup}
+8> ticket_sup:start_link().
+{ok,<0.134.0>}
+9> {ok, EventId} = ticket_sup:start_event("Disney", "Royal Albert", 100, 20).
+{ok,#Ref<0.809079572.3765174273.73177>}
+10> ticket_inventory:open_sale(EventId).
+ok
+11> ticket_inventory:event_info(EventId).
+{ok,{event,#Ref<0.809079572.3765174273.73177>,"Disney",
+           "Royal Albert",100,0,100,on_sale}}
+12> ets:tab2list(event_sup_registry).
+[{#Ref<0.809079572.3765174273.73177>,<0.138.0>}]

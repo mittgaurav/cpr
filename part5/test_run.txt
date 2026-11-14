@@ -1,0 +1,96 @@
+ticket:
+% erl -name ticket@127.0.0.1 -setcookie gaga
+Erlang/OTP 29 [erts-17.0.5] [source] [64-bit] [smp:10:10] [ds:10:10:10] [async-threads:1] [jit] [dtrace]
+
+Eshell V17.0.5 (press Ctrl+G to abort, type help(). for help)
+(ticket@127.0.0.1)1> c("src/ticket_inventory",          [{i, "include"}]).
+{ok,ticket_inventory}
+(ticket@127.0.0.1)2> c("src/waiting_room",              [{i, "include"}]).
+{ok,waiting_room}
+(ticket@127.0.0.1)3> c("src/reservation",               [{i, "include"}]).
+{ok,reservation}
+(ticket@127.0.0.1)4> c("src/ticket_sup",                [{i, "include"}]).
+{ok,ticket_sup}
+(ticket@127.0.0.1)5> c("src/event_sup_sup",             [{i, "include"}]).
+{ok,event_sup_sup}
+(ticket@127.0.0.1)6> c("src/event_sup",                 [{i, "include"}]).
+{ok,event_sup}
+(ticket@127.0.0.1)7> c("src/reservation_sup",           [{i, "include"}]).
+{ok,reservation_sup}
+(ticket@127.0.0.1)8> 
+                     ticket_sup:start_link().
+{ok,<0.140.0>}
+(ticket@127.0.0.1)9> {ok, EventId} = ticket_sup:start_event("Disney", "Royal Albert", 100, 20).
+{ok,#Ref<0.590597707.813170692.106130>}
+(ticket@127.0.0.1)10> ticket_inventory:open_sale(EventId).
+ok
+(ticket@127.0.0.1)11> ticket_inventory:event_info(EventId).
+{ok,{event,#Ref<0.590597707.813170692.106130>,"Disney",
+           "Royal Albert",100,0,100,on_sale}}
+(ticket@127.0.0.1)12> 
+                      ets:tab2list(event_sup_registry).
+[{#Ref<0.590597707.813170692.106130>,<0.144.0>}]
+(ticket@127.0.0.1)
+
+load:
+
+erl -name load@127.0.0.1 -setcookie gaga
+Erlang/OTP 29 [erts-17.0.5] [source] [64-bit] [smp:10:10] [ds:10:10:10] [async-threads:1] [jit] [dtrace]
+
+Eshell V17.0.5 (press Ctrl+G to abort, type help(). for help)
+(load@127.0.0.1)1> net_adm:ping('ticket@127.0.0.1').
+pong
+(load@127.0.0.1)2> 
+                   c("src/ticket_inventory",          [{i, "include"}]).
+{ok,ticket_inventory}
+(load@127.0.0.1)3> c("src/waiting_room",              [{i, "include"}]).
+{ok,waiting_room}
+(load@127.0.0.1)4> c("src/reservation",               [{i, "include"}]).
+{ok,reservation}
+(load@127.0.0.1)5> c("src/ticket_sup",                [{i, "include"}]).
+{ok,ticket_sup}
+(load@127.0.0.1)6> c("src/event_sup_sup",             [{i, "include"}]).
+{ok,event_sup_sup}
+(load@127.0.0.1)7> c("src/event_sup",                 [{i, "include"}]).
+{ok,event_sup}
+(load@127.0.0.1)8> c("src/reservation_sup",           [{i, "include"}]).
+{ok,reservation_sup}
+(load@127.0.0.1)9> c("src/ticket_load",               [i, "include"]).
+{ok,ticket_load}
+(load@127.0.0.1)10> 
+                    {ok, EventId} = ticket_load:get_event_id('ticket@127.0.0.1').
+{ok,#Ref<11090.590597707.813170692.106130>}
+(load@127.0.0.1)11> ticket_load:run('ticket@127.0.0.1', EventId, 100, 1).
+Command is taking a long time, type Ctrl+G, then enter 'i' to interrupt
+{ok,#{cancelled => 16,failed => 0,expired => 19,
+      results =>
+          [{expired,{error,unknown_reservation}},
+           {expired,{error,unknown_reservation}},
+           {expired,{error,unknown_reservation}},
+           {expired,{error,unknown_reservation}},
+           {expired,{error,unknown_reservation}},
+           {expired,{error,unknown_reservation}},
+           {expired,{error,unknown_reservation}},
+           {expired,{error,unknown_reservation}},
+           {expired,{error,unknown_reservation}},
+           {expired,{error,unknown_reservation}},
+           {expired,{error,unknown_reservation}},
+           {expired,{error,unknown_reservation}},
+           {expired,{error,unknown_reservation}},
+           {expired,{error,unknown_reservation}},
+           {expired,{error,unknown_reservation}},
+           {expired,{error,unknown_reservation}},
+           {expired,{error,unknown_reservation}},
+           {expired,{error,unknown_reservation}},
+           {expired,{error,unknown_reservation}},
+           {completed,{ok,[#Ref<11090.590597707.813170691.107921>]}},
+           {completed,{ok,[#Ref<11090.590597707.813170691.107896>]}},
+           {cancelled,ok},
+           {completed,{ok,...}},
+           {completed,{...}},
+           {completed,...},
+           {...}|...],
+      insufficient_tickets => 0,queued => 0,admitted => 100,
+      completed => 65,tickets_total => 100,tickets_sold => 65,
+      tickets_reserved => 0,tickets_remaining => 35}}
+(load@127.0.0.1)

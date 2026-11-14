@@ -1,0 +1,34 @@
+ticket:
+> erl -name ticket@127.0.0.1 -setcookie gaga
+
+c("src/ticket_inventory",          [{i, "include"}]).
+c("src/waiting_room",              [{i, "include"}]).
+c("src/reservation",               [{i, "include"}]).
+c("src/ticket_sup",                [{i, "include"}]).
+c("src/event_sup_sup",             [{i, "include"}]).
+c("src/event_sup",                 [{i, "include"}]).
+c("src/reservation_sup",           [{i, "include"}]).
+
+ticket_sup:start_link().
+{ok, EventId} = ticket_sup:start_event("Disney", "Royal Albert", 100, 20).
+ticket_inventory:open_sale(EventId).
+ticket_inventory:event_info(EventId).
+
+ets:tab2list(event_sup_registry).
+
+load:
+> erl -name load@127.0.0.1 -setcookie gaga
+
+net_adm:ping('ticket@127.0.0.1').
+
+c("src/ticket_inventory",          [{i, "include"}]).
+c("src/waiting_room",              [{i, "include"}]).
+c("src/reservation",               [{i, "include"}]).
+c("src/ticket_sup",                [{i, "include"}]).
+c("src/event_sup_sup",             [{i, "include"}]).
+c("src/event_sup",                 [{i, "include"}]).
+c("src/reservation_sup",           [{i, "include"}]).
+c("src/ticket_load",               [i, "include"]).
+
+{ok, EventId} = ticket_load:get_event_id('ticket@127.0.0.1').
+ticket_load:run('ticket@127.0.0.1', EventId, 100, 1).
