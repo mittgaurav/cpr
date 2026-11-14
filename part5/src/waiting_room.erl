@@ -216,10 +216,10 @@ handle_call({admit, Count}, _From, State = #{queue           := Queue,
 
     %% Split the user queue
     {NewQueue, ToBeAdmitted} = lists:split(Length - ActualCount, Queue),
-    ToBeAdmitted = lists:reverse(ToBeAdmitted),
+    ToBeAdmitted0 = lists:reverse(ToBeAdmitted),
 
-    NewAdmitted = add_admitted(ToBeAdmitted, Admitted),
-    NewTokens   = notify_admit(ToBeAdmitted, Users, maps:get(event_id, State), Tokens),
+    NewAdmitted = add_admitted(ToBeAdmitted0, Admitted),
+    NewTokens   = notify_admit(ToBeAdmitted0, Users, maps:get(event_id, State), Tokens),
 
     %% Keep user pid for
     %% old friends' sake
